@@ -1,18 +1,22 @@
 public class ControleFinitoDeEstados {
-    private String estadoAtual;
+    private Pilha pilha;
+    private Fila fila;
 
     public ControleFinitoDeEstados() {
-        // Defina o estado inicial aqui (por exemplo, estadoAtual = "q0")
+        pilha = new Pilha();
+        fila = new Fila();
     }
 
-    public void transicao(char simbolo) {
-        // Implemente a lógica para transição de estados com base no símbolo
-        // Exemplo: if (estadoAtual.equals("q0") && simbolo == 'a') { estadoAtual = "q1"; }
+    public void processarEvento(String evento) {
+        // Implemente a lógica do autômato aqui
+        // Use pilha.push(), pilha.pop(), fila.enqueue(), fila.dequeue() conforme necessário
     }
 
-    public boolean verificaAceitacao() {
-        // Implemente a lógica para verificar se o estado atual é um estado de aceitação
-        // Exemplo: return estadoAtual.equals("q2");
-        return false;
+    public boolean pilhaVazia() {
+        return pilha.isEmpty();
+    }
+
+    public boolean filaVazia() {
+        return fila.isEmpty();
     }
 }

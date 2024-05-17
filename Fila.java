@@ -1,25 +1,38 @@
-import java.util.LinkedList;
-
-public class Fila<T> {
-    private LinkedList<T> lista;
+class Fila {
+    private No inicio;
+    private No fim;
 
     public Fila() {
-        lista = new LinkedList<>();
+        inicio = null;
+        fim = null;
     }
 
-    public void enfileira(T elemento) {
-        lista.addLast(elemento);
-    }
-
-    public T desenfileira() {
-        if (isEmpty()) {
-            throw new IllegalStateException("Fila vazia");
+    public void enqueue(String elemento) {
+        No novoNo = new No(elemento);
+        if (inicio == null) {
+            inicio = fim = novoNo;
+        } else {
+            fim.proximo = novoNo;
+            novoNo.anterior = fim;
+            fim = novoNo;
         }
-        return lista.removeFirst();
+    }
+
+    public String dequeue() {
+        if (inicio == null) {
+            throw new IllegalStateException("A fila está vazia.");
+        }
+        String elementoRemovido = inicio.elemento;
+        inicio = inicio.proximo;
+        if (inicio != null) {
+            inicio.anterior = null;
+        } else {
+            fim = null;
+        }
+        return elementoRemovido;
     }
 
     public boolean isEmpty() {
-        return lista.isEmpty();
+        return inicio == null;
     }
 }
-

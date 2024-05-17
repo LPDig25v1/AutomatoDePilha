@@ -1,25 +1,25 @@
-class No<T> {
-    T elemento;
-    No<T> proximo;
-    No<T> anterior;
+class No {
+    String elemento;
+    No proximo;
+    No anterior;
 
-    public No(T elemento) {
+    public No(String elemento) {
         this.elemento = elemento;
         this.proximo = null;
         this.anterior = null;
     }
 }
 
-public class Pilha<T> {
-    private No<T> topo;
+public class Pilha {
+    private No topo;
 
     public Pilha() {
         topo = null;
     }
 
-    public void push(T elemento) {
-        No<T> novoNo = new No<>(elemento);
-        if (isEmpty()) {
+    public void push(String elemento) {
+        No novoNo = new No(elemento);
+        if (topo == null) {
             topo = novoNo;
         } else {
             novoNo.proximo = topo;
@@ -28,19 +28,34 @@ public class Pilha<T> {
         }
     }
 
-    public T pop() {
-        if (isEmpty()) {
-            throw new IllegalStateException("Pilha vazia");
+    public String pop() {
+        if (topo == null) {
+            throw new IllegalStateException("A pilha está vazia.");
         }
-        T elementoDesempilhado = topo.elemento;
+        String elementoRemovido = topo.elemento;
         topo = topo.proximo;
         if (topo != null) {
             topo.anterior = null;
         }
-        return elementoDesempilhado;
+        return elementoRemovido;
     }
 
     public boolean isEmpty() {
         return topo == null;
+    }
+}
+
+class TestePilha {
+    public static void main(String[] args) {
+        Pilha pilha = new Pilha();
+
+        pilha.push("Elemento1");
+        pilha.push("Elemento2");
+
+        System.out.println("Topo da pilha: " + pilha.peek());
+
+        while (!pilha.isEmpty()) {
+            System.out.println("Removido: " + pilha.pop());
+        }
     }
 }
