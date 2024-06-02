@@ -1,5 +1,3 @@
-import javax.lang.model.element.VariableElement;
-
 public class AutomatoDePilha {
     class No {
         String elemento;
