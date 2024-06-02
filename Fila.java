@@ -1,3 +1,15 @@
+class No {
+    String elemento;
+    No proximo;
+    No anterior;
+
+    public No(String elemento) {
+        this.elemento = elemento;
+        this.proximo = null;
+        this.anterior = null;
+    }
+}
+
 class Fila {
     private No inicio;
     private No fim;

@@ -43,6 +43,10 @@ public class Pilha {
     public boolean isEmpty() {
         return topo == null;
     }
+
+    public String peek() {
+        throw new UnsupportedOperationException("Unimplemented method 'peek'");
+    }
 }
 
 class TestePilha {

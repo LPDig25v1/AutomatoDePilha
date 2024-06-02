@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "AutomatoDePilha",
+            "request": "launch",
+            "mainClass": "AutomatoDePilha",
+            "projectName": "AutomatoDePilha_446951ad"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

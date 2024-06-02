@@ -1,4 +1,4 @@
-public static void main(String[] args) {
+/* public static void main(String[] args) {
     ControleFinitoDeEstados automato = new ControleFinitoDeEstados();
 
     // Exemplo de uso:
@@ -12,4 +12,4 @@ public static void main(String[] args) {
         String evento = automato.fila.dequeue();
         automato.processarEvento(evento);
     }
-}
+} */
