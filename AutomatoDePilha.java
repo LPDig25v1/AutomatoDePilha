@@ -50,10 +50,7 @@ public class AutomatoDePilha {
         }
 
         public String peek() {
-            if (inicio == null) {
-                throw new IllegalStateException("A fila está vazia.");
-            }
-            return inicio.elemento;
+            return inicio == null ? null : inicio.elemento;
         }
     }
 
@@ -92,10 +89,7 @@ public class AutomatoDePilha {
         }
     
         public String peek() {
-            if (topo == null) {
-                throw new IllegalStateException("A pilha está vazia.");
-            }
-            return topo.elemento;
+            return topo == null ? null : topo.elemento;
         }
     }
 
@@ -119,10 +113,7 @@ public class AutomatoDePilha {
             else if ("c".equals(q0)) {
                 pilha.pop();
                 pilha.push("l");
-                if ("a".equals(q1)) {
-                    pilha.pop();
-                }
-                else if ("b".equals(q1)) {
+                if ("a".equals(q1) || "b".equals(q1)) {
                     pilha.pop();
                 }
             }
@@ -136,20 +127,22 @@ public class AutomatoDePilha {
             return fila.isEmpty();
         }
     }
-    
+
     public static void main(String[] args) {
-        ControleFinitoDeEstados automato = new ControleFinitoDeEstados();
-    
-        // Exemplo de uso:
-        automato.fila.enqueue("Evento1");
-        automato.fila.enqueue("Evento2");
-        automato.pilha.push("Elemento1");
-        automato.pilha.push("Elemento2");
-    
-        // Processamento do autômato
-        while (!automato.filaVazia()) {
-            String evento = automato.fila.dequeue();
-            automato.processarEvento(evento, evento);
-        }
+        AutomatoDePilha automato = new AutomatoDePilha();
+            
+        AutomatoDePilha.Fila fila = automato.new Fila();
+        AutomatoDePilha.Pilha pilha = automato.new Pilha();
+        AutomatoDePilha.ControleFinitoDeEstados controle = automato.new ControleFinitoDeEstados();
+
+        controle.processarEvento("a", "b");
+        controle.processarEvento("c", "a");
+        controle.processarEvento("b", "a");
+
+        boolean pilhaVazia = controle.pilhaVazia();
+        boolean filaVazia = controle.filaVazia();
+
+        System.out.println("Pilha vazia?" + pilhaVazia);
+        System.out.println("Fila vazia?" + filaVazia);
     }
 }
