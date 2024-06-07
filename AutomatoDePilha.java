@@ -1,3 +1,8 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class AutomatoDePilha {
     class No {
         String elemento;
@@ -130,12 +135,9 @@ public class AutomatoDePilha {
 
     public static void main(String[] args) {
         AutomatoDePilha automato = new AutomatoDePilha();
-            
-        AutomatoDePilha.Fila fila = automato.new Fila();
-        AutomatoDePilha.Pilha pilha = automato.new Pilha();
         AutomatoDePilha.ControleFinitoDeEstados controle = automato.new ControleFinitoDeEstados();
 
-        controle.processarEvento("a", "b");
+        controle.processarEvento("c", "b");
         controle.processarEvento("c", "a");
         controle.processarEvento("b", "a");
 
@@ -144,5 +146,46 @@ public class AutomatoDePilha {
 
         System.out.println("Pilha vazia?" + pilhaVazia);
         System.out.println("Fila vazia?" + filaVazia);
+    }
+
+    class AutomatoDePilhaGUI {
+        private JFrame frame;
+        private JTextArea outputTextArea;
+        private AutomatoDePilha.ControleFinitoDeEstados controle;
+        
+        public AutomatoDePilhaGUI() {
+            frame = new JFrame("Automato de Pilha");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(400, 300);
+        
+            outputTextArea = new JTextArea();
+            outputTextArea.setEditable(false);
+
+            JTextField q0TextField = new JTextField();
+            JTextField q1TextField = new JTextField();
+        
+            JButton processButton = new JButton("Processar Evento");
+            processButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String q0 = q0TextField.getText(); // Exemplo: substitua pelos valores desejados
+                    String q1 = q1TextField.getText(); // Exemplo: substitua pelos valores desejados
+        
+                    controle.processarEvento(q0, q1);
+                    boolean pilhaVazia = controle.pilhaVazia();
+                    outputTextArea.append("Resultado (Pilha vazia): " + pilhaVazia + "\n");
+                }
+            });
+        
+            frame.setLayout(new BorderLayout());
+            frame.add(outputTextArea, BorderLayout.CENTER);
+            frame.add(processButton, BorderLayout.SOUTH);
+            frame.add(outputTextArea, BorderLayout.SOUTH);
+        
+            // Inicialize o controle de estados
+            controle = new AutomatoDePilha().new ControleFinitoDeEstados();
+        
+            frame.setVisible(true);
+        }
     }
 }

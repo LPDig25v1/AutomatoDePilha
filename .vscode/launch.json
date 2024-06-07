@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "AutomatoDePilhaGUI",
+            "request": "launch",
+            "mainClass": "AutomatoDePilhaGUI",
+            "projectName": "AutomatoDePilha_446951ad"
+        },
+        {
+            "type": "java",
             "name": "TestePilha",
             "request": "launch",
             "mainClass": "TestePilha",
