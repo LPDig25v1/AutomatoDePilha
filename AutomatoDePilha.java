@@ -1,190 +1,166 @@
-import javax.swing.*;
-import java.awt.*;
+import java.util.Stack;
+import java.util.LinkedList;
+import java.util.Queue;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AutomatoDePilha {
-    class No {
-        String elemento;
-        No proximo;
-        No anterior;
-    
-        public No(String elemento) {
-            this.elemento = elemento;
-            this.proximo = null;
-            this.anterior = null;
-        }
-    }
-    
-    class Fila {
-        No inicio;
-        No fim;
-    
-        public Fila() {
-            inicio = null;
-            fim = null;
-        }
-    
-        public void enqueue(String elemento) {
-            No novoNo = new No(elemento);
-            if (inicio == null) {
-                inicio = fim = novoNo;
-            } else {
-                fim.proximo = novoNo;
-                novoNo.anterior = fim;
-                fim = novoNo;
-            }
-        }
-    
-        public String dequeue() {
-            if (inicio == null) {
-                throw new IllegalStateException("A fila está vazia.");
-            }
-            String elementoRemovido = inicio.elemento;
-            inicio = inicio.proximo;
-            if (inicio != null) {
-                inicio.anterior = null;
-            } else {
-                fim = null;
-            }
-            return elementoRemovido;
-        }
-    
-        public boolean isEmpty() {
-            return inicio == null;
-        }
-
-        public String peek() {
-            return inicio == null ? null : inicio.elemento;
-        }
-    }
-
+public class AutomatoDePilha{
     public class Pilha {
-        No topo;
+        private Stack<Character> stack;
     
         public Pilha() {
-            topo = null;
+            stack = new Stack<>();
         }
     
-        public void push(String elemento) {
-            No novoNo = new No(elemento);
-            if (topo == null) {
-                topo = novoNo;
-            } else {
-                novoNo.proximo = topo;
-                topo.anterior = novoNo;
-                topo = novoNo;
-            }
+        public void push(char symbol) {
+            stack.push(symbol);
         }
     
-        public String pop() {
-            if (topo == null) {
-                throw new IllegalStateException("A pilha está vazia.");
-            }
-            String elementoRemovido = topo.elemento;
-            topo = topo.proximo;
-            if (topo != null) {
-                topo.anterior = null;
-            }
-            return elementoRemovido;
+        public char pop() {
+            return stack.pop();
         }
     
         public boolean isEmpty() {
-            return topo == null;
+            return stack.isEmpty();
+        }
+    }
+
+    public class Fila {
+        private Queue<Character> queue;
+    
+        public Fila() {
+            queue = new LinkedList<>();
         }
     
-        public String peek() {
-            return topo == null ? null : topo.elemento;
+        public void enqueue(char symbol) {
+            queue.add(symbol);
+        }
+    
+        public char dequeue() {
+            return queue.poll();
+        }
+    
+        public boolean isEmpty() {
+            return queue.isEmpty();
         }
     }
 
     public class ControleFinitoDeEstados {
-        Pilha pilha;
-        Fila fila;
-    
+        private enum Estado {
+            Q0, Q1
+        }
+
+        private Estado estadoAtual;
+        private Pilha pilha;
+
         public ControleFinitoDeEstados() {
+            estadoAtual = Estado.Q0;
             pilha = new Pilha();
-            fila = new Fila();
         }
-    
-        public void processarEvento(String q0, String q1) {
-            // Use pilha.push(), pilha.pop(), fila.enqueue(), fila.dequeue() conforme necessário
-            if ("a".equals(q0)) {
-                pilha.push("a");
-            }
-            else if ("b".equals(q0)) {
-                pilha.push("b");
-            }
-            else if ("c".equals(q0)) {
-                pilha.pop();
-                pilha.push("l");
-                if ("a".equals(q1) || "b".equals(q1)) {
-                    pilha.pop();
-                }
+
+        public void processaEntrada(char inputSymbol) {
+            switch (estadoAtual) {
+                case Q0:
+                    if (inputSymbol == 'a') {
+                        pilha.push('a');
+                    } else if (inputSymbol == 'b') {
+                        pilha.push('b');
+                    } else if (inputSymbol == 'c') {
+                        estadoAtual = Estado.Q1;
+                    }
+                    break;
+                case Q1:
+                    if (inputSymbol == 'a' || inputSymbol == 'b') {
+                        pilha.pop();
+                    }
+                    break;
+                // Adicione outras transições conforme necessário
             }
         }
-    
-        public boolean pilhaVazia() {
-            return pilha.isEmpty();
-        }
-    
-        public boolean filaVazia() {
-            return fila.isEmpty();
+
+        public boolean isAceita() {
+            return estadoAtual == Estado.Q1 && pilha.isEmpty();
         }
     }
 
-    public static void main(String[] args) {
-        AutomatoDePilha automato = new AutomatoDePilha();
-        AutomatoDePilha.ControleFinitoDeEstados controle = automato.new ControleFinitoDeEstados();
-
-        controle.processarEvento("c", "b");
-        controle.processarEvento("c", "a");
-        controle.processarEvento("b", "a");
-
-        boolean pilhaVazia = controle.pilhaVazia();
-        boolean filaVazia = controle.filaVazia();
-
-        System.out.println("Pilha vazia?" + pilhaVazia);
-        System.out.println("Fila vazia?" + filaVazia);
+    public class Main {
+        public static void main(String[] args) {
+            // Crie as instâncias das classes
+            AutomatoDePilha automatoDePilha = new AutomatoDePilha();
+            AutomatoDePilha.Pilha pilha = automatoDePilha.new Pilha();
+            AutomatoDePilha.Fila fila = automatoDePilha.new Fila();
+            AutomatoDePilha.ControleFinitoDeEstados automato = automatoDePilha.new ControleFinitoDeEstados();
+    
+            // Exemplo de entrada (substitua pela sua palavra)
+            String entrada = "abac";
+    
+            // Processa cada símbolo da entrada
+            for (char symbol : entrada.toCharArray()) {
+                automato.processaEntrada(symbol);
+            }
+    
+            // Verifica se a palavra é aceita
+            if (automato.isAceita()) {
+                System.out.println("Palavra aceita pelo autômato de pilha!");
+            } else {
+                System.out.println("Palavra não é aceita pelo autômato de pilha.");
+            }
+        }
     }
 
-    class AutomatoDePilhaGUI {
-        private JFrame frame;
-        private JTextArea outputTextArea;
-        private AutomatoDePilha.ControleFinitoDeEstados controle;
-        
-        public AutomatoDePilhaGUI() {
-            frame = new JFrame("Automato de Pilha");
+    public class InterfaceGraficaExemplo {
+
+        public static void main(String[] args) {
+            JFrame frame = new JFrame("Autômato de Pilha");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(400, 300);
-        
-            outputTextArea = new JTextArea();
-            outputTextArea.setEditable(false);
+            frame.setSize(400, 200);
 
-            JTextField q0TextField = new JTextField();
-            JTextField q1TextField = new JTextField();
-        
-            JButton processButton = new JButton("Processar Evento");
-            processButton.addActionListener(new ActionListener() {
+            JPanel panel = new JPanel();
+
+            // Campo de entrada para a palavra
+            JLabel label = new JLabel("Digite a palavra:");
+            JTextField palavraField = new JTextField(20);
+
+            // Botão para verificar a palavra
+            JButton verificarButton = new JButton("Verificar");
+            verificarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    String q0 = q0TextField.getText(); // Exemplo: substitua pelos valores desejados
-                    String q1 = q1TextField.getText(); // Exemplo: substitua pelos valores desejados
-        
-                    controle.processarEvento(q0, q1);
-                    boolean pilhaVazia = controle.pilhaVazia();
-                    outputTextArea.append("Resultado (Pilha vazia): " + pilhaVazia + "\n");
+                    String entrada = palavraField.getText(); // Obtém a palavra digitada
+
+                    // Crie as instâncias das classes do autômato
+                    AutomatoDePilha automatoDePilha = new AutomatoDePilha();
+                    AutomatoDePilha.ControleFinitoDeEstados automato = automatoDePilha.new ControleFinitoDeEstados();
+
+                    // Processa cada símbolo da entrada
+                    for (char symbol : entrada.toCharArray()) {
+                        automato.processaEntrada(symbol);
+                    }
+
+                    // Exibe o resultado na interface
+                    if (automato.isAceita()) {
+                        JOptionPane.showMessageDialog(frame, "Palavra aceita pelo autômato de pilha!");
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Palavra não é aceita pelo autômato de pilha.");
+                    }
                 }
             });
-        
-            frame.setLayout(new BorderLayout());
-            frame.add(outputTextArea, BorderLayout.CENTER);
-            frame.add(processButton, BorderLayout.SOUTH);
-            frame.add(outputTextArea, BorderLayout.SOUTH);
-        
-            // Inicialize o controle de estados
-            controle = new AutomatoDePilha().new ControleFinitoDeEstados();
-        
+
+            // Adicione componentes ao painel
+            panel.add(label);
+            panel.add(palavraField);
+            panel.add(verificarButton);
+
+            // Adicione o painel ao frame
+            frame.add(panel);
+
+            // Exiba o frame
             frame.setVisible(true);
         }
     }
