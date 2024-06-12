@@ -1,7 +1,6 @@
 import java.util.Stack;
 import java.util.LinkedList;
 import java.util.Queue;
-<<<<<<< HEAD
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,8 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-=======
->>>>>>> 9e06ced1d92ad462b5678ec6c8bb34fae6a8e768
 
 public class AutomatoDePilha{
     public class Pilha {
@@ -95,16 +92,10 @@ public class AutomatoDePilha{
     public class Main {
         public static void main(String[] args) {
             // Crie as instâncias das classes
-<<<<<<< HEAD
             AutomatoDePilha automatoDePilha = new AutomatoDePilha();
             AutomatoDePilha.Pilha pilha = automatoDePilha.new Pilha();
             AutomatoDePilha.Fila fila = automatoDePilha.new Fila();
             AutomatoDePilha.ControleFinitoDeEstados automato = automatoDePilha.new ControleFinitoDeEstados();
-=======
-            Pilha pilha = new Pilha();
-            Fila fila = new Fila();
-            ControleFinitoDeEstados automato = new ControleFinitoDeEstados();
->>>>>>> 9e06ced1d92ad462b5678ec6c8bb34fae6a8e768
     
             // Exemplo de entrada (substitua pela sua palavra)
             String entrada = "abac";
@@ -120,11 +111,10 @@ public class AutomatoDePilha{
             } else {
                 System.out.println("Palavra não é aceita pelo autômato de pilha.");
             }
-<<<<<<< HEAD
         }
     }
 
-    public class InterfaceGraficaExemplo {
+    public class InterfaceGrafica {
 
         public static void main(String[] args) {
             JFrame frame = new JFrame("Autômato de Pilha");
@@ -133,27 +123,22 @@ public class AutomatoDePilha{
 
             JPanel panel = new JPanel();
 
-            // Campo de entrada para a palavra
             JLabel label = new JLabel("Digite a palavra:");
             JTextField palavraField = new JTextField(20);
 
-            // Botão para verificar a palavra
             JButton verificarButton = new JButton("Verificar");
             verificarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    String entrada = palavraField.getText(); // Obtém a palavra digitada
+                    String entrada = palavraField.getText();
 
-                    // Crie as instâncias das classes do autômato
                     AutomatoDePilha automatoDePilha = new AutomatoDePilha();
                     AutomatoDePilha.ControleFinitoDeEstados automato = automatoDePilha.new ControleFinitoDeEstados();
 
-                    // Processa cada símbolo da entrada
                     for (char symbol : entrada.toCharArray()) {
                         automato.processaEntrada(symbol);
                     }
 
-                    // Exibe o resultado na interface
                     if (automato.isAceita()) {
                         JOptionPane.showMessageDialog(frame, "Palavra aceita pelo autômato de pilha!");
                     } else {
@@ -162,18 +147,13 @@ public class AutomatoDePilha{
                 }
             });
 
-            // Adicione componentes ao painel
             panel.add(label);
             panel.add(palavraField);
             panel.add(verificarButton);
 
-            // Adicione o painel ao frame
             frame.add(panel);
 
-            // Exiba o frame
             frame.setVisible(true);
-=======
->>>>>>> 9e06ced1d92ad462b5678ec6c8bb34fae6a8e768
         }
-    }    
+    }
 }
