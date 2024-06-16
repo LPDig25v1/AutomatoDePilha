@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "AutomatoDePilha$InterfaceGrafica",
+            "request": "launch",
+            "mainClass": "AutomatoDePilha$InterfaceGrafica",
+            "projectName": "AutomatoDePilha_4ddd2676"
+        },
+        {
+            "type": "java",
+            "name": "AutomatoDePilha$Main",
+            "request": "launch",
+            "mainClass": "AutomatoDePilha$Main",
+            "projectName": "AutomatoDePilha_4ddd2676"
+        },
+        {
+            "type": "java",
             "name": "AutomatoDePilhaGUI",
             "request": "launch",
             "mainClass": "AutomatoDePilhaGUI",

@@ -80,7 +80,6 @@ public class AutomatoDePilha{
                         pilha.pop();
                     }
                     break;
-                // Adicione outras transições conforme necessário
             }
         }
 
@@ -91,21 +90,17 @@ public class AutomatoDePilha{
 
     public class Main {
         public static void main(String[] args) {
-            // Crie as instâncias das classes
             AutomatoDePilha automatoDePilha = new AutomatoDePilha();
             AutomatoDePilha.Pilha pilha = automatoDePilha.new Pilha();
             AutomatoDePilha.Fila fila = automatoDePilha.new Fila();
             AutomatoDePilha.ControleFinitoDeEstados automato = automatoDePilha.new ControleFinitoDeEstados();
     
-            // Exemplo de entrada (substitua pela sua palavra)
             String entrada = "abac";
     
-            // Processa cada símbolo da entrada
             for (char symbol : entrada.toCharArray()) {
                 automato.processaEntrada(symbol);
             }
-    
-            // Verifica se a palavra é aceita
+
             if (automato.isAceita()) {
                 System.out.println("Palavra aceita pelo autômato de pilha!");
             } else {
